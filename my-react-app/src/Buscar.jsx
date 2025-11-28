@@ -37,9 +37,10 @@ export default function Buscar() {
     }, [jogador]);
 
     return (
-        <>
-            <div id="input">
+        <div style={{fontFamily: ' "Arial", "Helvetica", "sans-serif" ', textAlign: 'center'}}>
+            <div>
                 <input 
+                    style={{padding: '20px', fontSize: '20px'}}
                     type="text" 
                     placeholder="Escreva Aqui" 
                     value={jogador} 
@@ -60,7 +61,7 @@ export default function Buscar() {
                     <img src={selecionado.strThumb} alt="Foto Jogador" />
                 </div>
             )}
-        </>
+        </div>
     );
 }
 
