@@ -1,5 +1,12 @@
 import api from './services/api'
 import { useState, useEffect } from 'react';
+import TextField from '@mui/material/TextField';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 
 export default function Buscar() {
     const [jogador, setJogador] = useState('');
@@ -36,12 +43,21 @@ export default function Buscar() {
         return () => clearTimeout(timeoutId);
     }, [jogador]);
 
+    const style = {
+        p: 0,
+        width: '100%',
+        maxWidth: 360,
+        borderRadius: 2,
+        border: '1px solid',
+        borderColor: 'divider',
+        backgroundColor: 'background.paper',
+    };
+
     return (
         <div style={{fontFamily: ' "Arial", "Helvetica", "sans-serif" ', textAlign: 'center'}}>
             <div>
-                <input 
-                    style={{padding: '20px', fontSize: '20px'}}
-                    type="text" 
+                <TextField 
+                    id='outlined-read-only-input'
                     placeholder="Escreva Aqui" 
                     value={jogador} 
                     onChange={pegarTexto} 
@@ -53,12 +69,35 @@ export default function Buscar() {
             {erro && <p style={{color: 'red'}}>{erro}</p>}
             
             {selecionado && (
-                <div>
-                    <h1>Name: {selecionado.strPlayer}</h1>
-                    <h1>Team: {selecionado.strTeam}</h1>
-                    <h1>Nationality: {selecionado.strNationality}</h1>
-                    <h1>Position: {selecionado.strPosition}</h1>
-                    <img src={selecionado.strThumb} alt="Foto Jogador" />
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <List sx={style} aria-label='mailbox folders'>
+                        <ListItem>
+                            <ListItemText primary={selecionado.strPlayer} />
+                        </ListItem>
+                        <Divider component='li' />
+                        <ListItem>
+                            <ListItemText primary={selecionado.strTeam} />
+                        </ListItem>
+                        <Divider component='li' />
+                        <ListItem>
+                            <ListItemText primary={selecionado.strNationality} />
+                        </ListItem>
+                        <Divider component='li' />
+                        <ListItem>
+                            <ListItemText primary={selecionado.strPosition} />
+                        </ListItem>
+                        <Divider component='li' />
+                        <ImageList sx={{ width: 725, height: 450 }}>
+                            <ImageListItem>
+                                <img 
+                                    srcSet={`${selecionado.strThumb}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                    src={`${selecionado.strThumb}?w=164&h=164&fit=crop&auto=format`} 
+                                    alt={selecionado.strPlayer}
+                                    loading="lazy"
+                                />
+                            </ImageListItem>
+                        </ImageList>
+                    </List>
                 </div>
             )}
         </div>
